@@ -1,0 +1,31 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ftp
+  namespace: bohan
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: ftp
+    spec:
+      nodeSelector:
+        deptype: gitlab
+      containers:
+      - name: ftp
+        image: fauria/vsftpd
+        env:                                          
+        - name: FTP_USER 
+          value: "ops_ftp"      
+        - name: FTP_PASS 
+          value: "XFnFqIgTAVBV" 
+        ports:
+        - containerPort: 21
+        volumeMounts:
+        - mountPath: /home/vsftpd
+          name: ftp-disk
+      volumes:
+      - name: ftp-disk
+        hostPath:
+          path: /k8s/disk/bohan/vsftpd
