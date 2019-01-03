@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: skyweb
+  namespace: bohan
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        name: skyweb
+    spec:
+      containers:
+      - name: webide-pod-skyweb
+        image: reg01.sky-mobi.com/devops/sky_nginx:0.0.1
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+        - name: sunregkey
